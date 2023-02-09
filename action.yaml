@@ -1,4 +1,7 @@
 name: Generate env file
+description: This action receives your secrets/repo vars and
+  generates .env file to further use as secret config when
+  launching gh workflows
 
 inputs:
   file:
