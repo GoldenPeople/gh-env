@@ -1,0 +1,29 @@
+name: Generate env file
+
+inputs:
+  file:
+    description: "name of env file to save. Default: .env"
+    default: ".env"
+  prefix:
+    description: "prefix to include in .env file. Default: ENV"
+    default: "ENV"
+  sep:
+    description: "Prefix separator. Default: _ (underscore)"
+    default: "_"
+  secrets:
+    description: ""
+  vars:
+    description: ""
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+
+    - shell: bash
+      run: python filter.py ${{inputs.file}} ${{inputs.prefix}} ${{inputs.sep}}
+      env:
+        SECRETS: ${{ inputs.secrets }}
+        VAR: ${{ inputs.vars }}
