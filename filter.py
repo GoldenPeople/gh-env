@@ -2,14 +2,19 @@ import argparse
 import json
 import os
 
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 
 def save_file(text, filename):
-    print(f"> file: {filename}, text: {text}")
+    logger.info(f"Saving file: {filename}")
     with open(filename, "w") as f:
         f.write(text)
 
 
-def filter(env: dict, prefix, sep='_'):
+def _filter(env: dict, prefix, sep='_'):
     result = ""
     for k, v in env.items():
         if k == prefix:
@@ -20,7 +25,6 @@ def filter(env: dict, prefix, sep='_'):
         else:
             continue
         result += '\n'
-    print("> filter res:", result)
     return result
 
 
@@ -35,23 +39,26 @@ def parse_args():
 
 
 def main():
+    logger.info(f"{'*'*20} START {'*'*20}")
     args = parse_args()
-    env_list = [os.environ.get("SECRETS"),
-                os.environ.get("VAR")]
-    print("> env_list: ", env_list)
+    prefix = args.prefix.upper()
+    env_list = [
+        os.environ.get("SECRETS"),
+        os.environ.get("VAR")
+    ]
+    logger.info(f"VAR list input: {env_list[0]}")
     result = ""
     for env in env_list:
-        print("> env:", env)
+        logger.info(f"ENV: {env}")
         if not env:
             continue
 
         _env = json.loads(env)
-        print("> env 2:", _env)
-        _filtered = filter(_env, args.prefix, args.sep)
+        _filtered = _filter(_env, prefix, args.sep)
         result += _filtered
 
     save_file(result, args.file)
-    print(f"{'*'*20} SAVED {'*'*20}")
+    logger.info(f"{'*'*20} SAVED {'*'*20}")
 
 
 if __name__ == "__main__":
