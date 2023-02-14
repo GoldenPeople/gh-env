@@ -21,13 +21,13 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout
 
     - uses: actions/setup-python@v4
       with:
         python-version: "3.10"
 
-    - run: python filter.py ${{inputs.file}} ${{inputs.prefix}} ${{inputs.sep}}
+    - run: python $GITHUB_ACTION_PATH/filter.py ${{inputs.file}} ${{inputs.prefix}} ${{inputs.sep}}
       shell: bash
       env:
         SECRETS: ${{ inputs.secrets }}
