@@ -46,11 +46,11 @@ def main():
         os.environ.get("SECRETS"),
         os.environ.get("VAR")
     ]
-    logger.info(f"VAR list input: {env_list[0]}")
+    logger.info(f"VAR list input: {env_list}")
     result = ""
     for env in env_list:
         logger.info(f"ENV: {env}")
-        if not env:
+        if not env and not (_env := json.loads(env)):
             continue
 
         _env = json.loads(env)
