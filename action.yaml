@@ -29,8 +29,7 @@ runs:
 
     - run: |
         touch ${{inputs.file}}
-
-    - run: python $GITHUB_ACTION_PATH/filter.py ${{inputs.file}} ${{inputs.prefix}} ${{inputs.sep}}
+        python $GITHUB_ACTION_PATH/filter.py ${{inputs.file}} ${{inputs.prefix}} ${{inputs.sep}}
       shell: bash
       env:
         SECRETS: ${{ inputs.secrets }}
