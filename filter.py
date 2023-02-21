@@ -16,6 +16,8 @@ def save_file(text, filename):
 
 def _filter(env: dict, prefix, sep='_'):
     result = ""
+    if not env:
+        return result
     for k, v in env.items():
         if k == prefix:
             result += v
