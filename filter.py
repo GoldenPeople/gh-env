@@ -53,7 +53,6 @@ def main():
         if not env and not (_env := json.loads(env)):
             continue
 
-        _env = json.loads(env)
         _filtered = _filter(_env, prefix, args.sep)
         result += _filtered
 
