@@ -52,9 +52,11 @@ def main():
     result = ""
     for env in env_list:
         logger.info(f"ENV: {env}")
-        if not env and not (_env := json.loads(env)):
+
+        if not env:
             continue
 
+        _env = json.loads(env)
         _filtered = _filter(_env, prefix, args.sep)
         result += _filtered
 
